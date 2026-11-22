@@ -1,28 +1,28 @@
-/*
-score-hider.js waits for the document to fullyload before hiding the elements, this causes a delay 
-that makes the MAL scores be visible for a short time once the page is loaded.
+/* For the elements that are created in preload-hide.js */
 
-To circumvent this, this css section is run AS the page is loading, making the score section fully
-invisible. 
-
-After score-hider.js finishes hiding the scores, this element is set to visible again, guaranteeing
-that the users will absolutely never see the scores unless they want to. 
-
+/* To make .mal-hider-cover behave like "relative" while not taking space in the hidden element, we make its parent relative with
+	width and height "0".
  */
-.stats-block, /*Where the stats in ANIME/MANGA page stays*/
-.leftside, /*The left side of the ANIME/MANGA page, that has some scores*/
-div[class*=review__header], /*Element from the anime/manga page that has REVIEW NUMERICAL INFORMATION*/
-.js-categories-seasonal:has(.seasonal-anime):not(.list, .tile-anime-list, :has([class=seasonal-anime-list])), /*The ANIME SEASONAL VIEW*/
-[class=seasonal-anime-list],/*Still the ANIME SEASONAL VIEW (specifically for the anime/manga stack pages)*/
-.js-categories-seasonal.list, /*ANIME LIST VIEW*/
-.js-block-list.list, /*ANIME LIST VIEW (in manga/anime genres))*/
-.tile-anime-list, /*ANIME TILE VIEW (in stacks and producer pages)*/
-.content-left:has(.information [data-l-content-type=anime], .information [data-l-content-type=manga]) /*SEARCH RESULTS PAGE (/search/all)*/
-{
-	/*
-		[05/10/2026] - Changing from visibility:hidden to opacity:0
-		Visiblity: hidden makes it impossible to run innerText on the js, which stops the scores from 
-		being stored corretly. opacity: 0; fixes that problem.
-	*/
-	opacity: 0; 
+.mal-hider-cover-container{
+	position: relative;
+	width: 0;
+	height: 0;
 }
+.mal-hider-cover{
+	visibility: visible;
+
+	/* since .mal-hider-cover-container is relative, .mal-hider-cover will use it as a reference despite being "absolute"*/
+	position: absolute;
+	top: 0;
+	left: 0;
+
+	/* So the text doesn't spill to the bottom */
+	width: max-content;
+
+	/*max-width is set in preload-hide.js*/
+}
+
+.mal-hider-cover a{
+	cursor: pointer;
+}
+

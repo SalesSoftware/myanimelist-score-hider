@@ -448,19 +448,23 @@ class ScoreHider{
 		console.log("reverting pre-load hide");
 		//making the elements hidden the preload-hide.css visible again
 		if(this.divStatsBlock)
-			this.divStatsBlock.style.opacity = "1";
+			this.divStatsBlock.style.visibility = "visible";
 
 		if(this.leftSidebar)
-			this.leftSidebar.style.opacity = "1";
+			this.leftSidebar.style.visibility = "visible";
 
 		if(this.infoReviewHeader)
-			this.infoReviewHeader.style.opacity = "1";
+			this.infoReviewHeader.style.visibility = "visible";
 
 		if(this.animeView?.element)
-			this.animeView.element.style.opacity = "1";
+			this.animeView.element.style.visibility = "visible";
 
 		if(this.searchResultsContainer)
-			this.searchResultsContainer.style.opacity = "1";
+			this.searchResultsContainer.style.visibility = "visible";
+
+		//Removing the "cover" elements that were added by "preload-hide.js" from the DOM.
+		for(let cover of document.querySelectorAll(".mal-hider-cover-container"))
+			cover.remove();
 	}
 
 	/**
