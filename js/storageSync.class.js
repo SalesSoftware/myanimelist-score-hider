@@ -13,7 +13,7 @@ class StorageSync{
         //return browser.storage.sync.get(elementName).then(
         //return Promise.reject(new Error("Simulated error2")).then(
         return browser.storage.sync.get(elementName).then(
-            (value)=> value[elementName],
+            (value)=> value[elementName]
         ).catch(
             (error)=>{return {error}}
         );
@@ -31,7 +31,7 @@ class StorageSync{
         let success = false;
         let errorMsg = undefined;
 
-        await this.debounce(async ()=>{
+        await this.debounce(async () => {
             //await browser.storage.sync.set(value).then(
             //await Promise.reject(new Error("Simulated error2")).then(
             await browser.storage.sync.set(value).then(
@@ -60,10 +60,11 @@ class StorageSync{
         return new Promise((resolve)=>{
             //ATTENTION considering how we're using a "global" variable "this.debounceTimeout", this technically means that it can be cleared
             //by another request. For example, if I change the scoreplaceholder, and before it gets cleared I click in the score chebox, the most
-            //recent call would clear the scoreplaceholder timeout, potentially generating issues.
+            //recent call would clear the scoreplaceholder timeout in favor of the checkbox
 
-            //Considering how I'm using a default delay of 50 - 100ms, I don't think this error is going to happen for the users. But if I'm wrong
-            //then, well.... woops.
+            //I interpret that debounce's objective is to stop the user from making too many "set" requests IN GENERAL, so I don't see an issue with
+            //this bug.
+            //I HENCEFORTH DECLARE THIS BUG A FEATURE
             clearTimeout(this.debounceTimeout);
             this.debounceTimeout = setTimeout(()=>{
                 resolve(true);
@@ -85,19 +86,8 @@ class StorageSync{
         //creating list that we're going to store
         let dataToStore = {
             //by default we hide every single stat
-            "scorehider_settings": [
-                "recommended",
-                "mixed",
-                "not_recommended",
-                "review_amount",
-                "ratio_bar",
-                "favorites",
-                "members",
-                "popularity",
-                "rank",
-                "users",
-                "score"
-            ]
+            //ATTENTION "SETTINGS_OPTIONS" is from the "system-config.js" file
+            "scorehider_settings": SETTINGS_OPTIONS
         };
 
         let result = await this.setInStorage(dataToStore); //storing settings

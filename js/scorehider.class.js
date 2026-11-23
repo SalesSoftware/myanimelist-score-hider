@@ -203,17 +203,21 @@ class ScoreHider{
 							//This index-gathering proccess is done in the code below:
 
 							//Gets the very first <tr> element of the list view, that is the row that contains the labels of the stats.
-							let trTitle = this.animeView.element.querySelectorAll("tr:not(:has(div[id^=sarea])")[0];
-							//gets all <td> columns from the <tr> element that contains the labels of the stats, and iterates through it
-							Array.from(trTitle.querySelectorAll("td"), (value, key)=>{
-								//Looks for the <td> columns that has the label for "score" and "members"
-								//If it finds the <td> elements, gather the index position of the <td> in the NodeList and store this index in
-								//indexScore and indexMembers. By using those 2 values we'll know exactly what column to change in all elements.
-								if (value.textContent?.toLowerCase().includes("score"))
-									indexScore = key;
-								else if(value.textContent?.toLowerCase().includes("members"))
-									indexMembers = key;
-							});
+							let trTitle = this.animeView.element.querySelector("tr:not(:has(div[id^=sarea]))");
+							if(trTitle){
+								//gets all <td> columns from the <tr> element that contains the labels of the stats, and iterates through it
+								Array.from(trTitle?.querySelectorAll("td"), (value, key)=>{
+									//Looks for the <td> columns that has the label for "score" and "members"
+									//If it finds the <td> elements, gather the index position of the <td> in the NodeList and store this index in
+									//indexScore and indexMembers. By using those 2 values we'll know exactly what column to change in all elements.
+									if (value.textContent?.toLowerCase().includes("score"))
+										indexScore = key;
+									else if(value.textContent?.toLowerCase().includes("members"))
+										indexMembers = key;
+								});
+							}else{
+								console.error("Couldn't retrieve trTitle");
+							}
 						}
 						break;
 				}
@@ -314,7 +318,7 @@ class ScoreHider{
 			//ATTENTION! This is NOT refering to the hoverSearchBarObserver. The changes below are applied once the user searchs for something
 			//in the top-right search bar AND PRESSES ENTER or CLICKS IN "view more results"
 			if(location.pathname == "/search/all"){
-				this.searchResultsContainer = document.querySelector(".content-left");
+				this.searchResultsContainer = document.querySelector(".content-left:has(.information [data-l-content-type=anime], .information [data-l-content-type=manga])");
 				this.searchResultsElements = [];
 				if(this.searchResultsContainer){
 					//The stats we are trying to hide are in a ".information" div. "Scored [score number]" and "[member amount] members"
@@ -398,7 +402,7 @@ class ScoreHider{
 
 			//If there was an error while retrieving the settings, thrown an error
 			if(this.settings?.error){
-				console.error("There was an error while attempting to retrieve the settings");
+				console.error("There was an error while attempting to retrieve the settings: ");
 				throw this.settings.error;
 			}
 
@@ -422,7 +426,7 @@ class ScoreHider{
 			if(this.animeViewElements.length > 0)
 				this.setAnimeViewStatsVisibility(this.settings);
 			//ANIME/MANGA PAGE
-			else if(this.scoreDetails && (this.divStatsBlock || this.leftSidebar || this.reviewTab))
+			else if(this.scoreDetails && (this.divStatsBlock || this.leftSidebar || this.infoReviewHeader))
 				this.setAnimePageStatsVisibility(this.settings);
 
 			//SEARCH RESULTS PAGE (/search/all)
@@ -446,21 +450,9 @@ class ScoreHider{
 	 */
 	revertPreLoadHide(){
 		console.log("reverting pre-load hide");
+
 		//making the elements hidden the preload-hide.css visible again
-		if(this.divStatsBlock)
-			this.divStatsBlock.style.visibility = "visible";
-
-		if(this.leftSidebar)
-			this.leftSidebar.style.visibility = "visible";
-
-		if(this.infoReviewHeader)
-			this.infoReviewHeader.style.visibility = "visible";
-
-		if(this.animeView?.element)
-			this.animeView.element.style.visibility = "visible";
-
-		if(this.searchResultsContainer)
-			this.searchResultsContainer.style.visibility = "visible";
+		document.getElementById("preload-hide")?.remove();
 
 		//Removing the "cover" elements that were added by "preload-hide.js" from the DOM.
 		for(let cover of document.querySelectorAll(".mal-hider-cover-container"))
@@ -545,7 +537,7 @@ class ScoreHider{
 				//making sure we won't include anything other than "score" and "members" in the statList
 				statList = statList.filter((stat)=>["score", "members"].includes(stat));
 				console.log(`setAnimeViewStatsVisibility(): STARTING TO ${action.toUpperCase()} THE ELEMENTS`);
-				//TODO: This is a pretty heavy iteration. For example: If there's 300 anime entries in the fall 2010 page, then this will run
+				//ATTENTION: This is a pretty heavy iteration. For example: If there's 300 anime entries in the fall 2010 page, then this will run
 				//300 times. Each time we try to hide or show the elements, it'll run 300 times.
 				//I tried my best to make it concise, but I don't know if there could be possible performance issues.
 				//since it works just fine for me, I'll just proceed with the development normally, but this section must be closely monitored.
@@ -820,7 +812,7 @@ class ScoreHider{
 					"Ranked:" -> "ranked:" -> "ranked"		
 					and if elementName == "ranked" then the var "element" receives that DOM element
 				*/
-				return elementName == e.querySelector("span").textContent.toLowerCase().replace(":", "");
+				return elementName == e.querySelector("span")?.textContent.toLowerCase().replace(":", "");
 			});
 		}		
 
@@ -870,9 +862,6 @@ class ScoreHider{
 
 		//STORAGE UPDATE LISTENER
 		//this listener will be triggered as soon as a value in the popup is checked/unchecked
-		//TODO: When I implement the "default placeholder" change, it might be more interesting to make this a private function, that
-		//calls for "onStorageChange" or the, say, "placeholderChange", depending on the value changed, and then updates the settings.
-		//keep this in mind when you finally implement this system
 		browser.storage.sync.onChanged.addListener((changes) => this.onStorageChange(changes));
 	}
 
@@ -1072,7 +1061,7 @@ class ScoreHider{
 		if(this.animeViewElements.length > 0)
 			this.setAnimeViewStatsVisibility(hideList, showList);
 		//ANIME/MANGA PAGE
-		else if(this.scoreDetails && (this.divStatsBlock || this.leftSidebar || this.reviewTab))
+		else if(this.scoreDetails && (this.divStatsBlock || this.leftSidebar || this.infoReviewHeader))
 			this.setAnimePageStatsVisibility(hideList, showList); //ANIME PAGE
 
 		//SCORE HOVERING POPUP ELEMENTS

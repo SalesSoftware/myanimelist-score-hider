@@ -60,8 +60,15 @@ class PopupMenu{
      * ATTENTION: This is intended to be run when the popup is OPENED. i.e: It should NOT be called more than once.
      */
     populateCheckboxes(){
-        for(let statName of this.settings)
-            document.getElementById(statName).checked = true;
+        for(let statName of this.settings){
+            try{
+                document.getElementById(statName).checked = true;
+            }catch(error){
+                console.error(`There was an error while checking ${statName} for the first time`, error);
+                this.showErrorPopup(`There was an error while checking "${statName}" for the first time\n${error}`);
+                continue;
+            }
+        }
     }
 
     /**
@@ -81,19 +88,8 @@ class PopupMenu{
                 switch(btn.id){
                     case "hide-all":
                         //if the button clicked was "hide all", we send EVERY STAT to "scorehider_settings" in storage
-                        scorehider_settings = [
-                            "recommended",
-                            "mixed",
-                            "not_recommended",
-                            "review_amount",
-                            "ratio_bar",
-                            "favorites",
-                            "members",
-                            "popularity",
-                            "rank",
-                            "users",
-                            "score"
-                        ];
+                        //ATTENTION "SETTINGS_OPTIONS" is defined in "system-config.js"
+                        scorehider_settings = SETTINGS_OPTIONS;
                         checked = true;
                         console.log("hiding all", scorehider_settings);
                         break;
@@ -265,8 +261,8 @@ class PopupMenu{
         //IF the user copy-pastes a text with more than one character, we'll only use the FIRST character THAT IS NOT AN EMPTY SPACE as the
         //score placeholder
         scorePlaceholderInput.addEventListener("input", async (e)=>{
-            //if the text length is 0 the user erased text. So this listener does nothing
-            if(e.target.value.length <= 0)
+            //if there's no text this callback does nothing
+            if(!e.target.value || e.target.value.length <= 0)
                 return undefined;
 
             //trimming the value to disallow empty spaces being registered as a score placeholder

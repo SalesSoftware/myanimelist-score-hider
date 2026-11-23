@@ -10,29 +10,21 @@
 
 //(1) HIDING THE ELEMENTS ===========================================================================================================================
 // array with the selectors of every element that we want to hide
-const elementsToHide = [
-    ".stats-block", /*Where the stats in ANIME/MANGA page stays*/
-    ".leftside",/*The left side of the ANIME/MANGA page, that has some scores*/
-    "div[class*=review__header]", /*Element from the anime/manga page that has REVIEW NUMERICAL INFORMATION*/
-    ".js-categories-seasonal:has(.seasonal-anime):not(.list, .tile-anime-list, :has([class=seasonal-anime-list]))", /*The ANIME SEASONAL VIEW*/
-    "[class=seasonal-anime-list]", /*Still the ANIME SEASONAL VIEW (specifically for the anime/manga stack pages)*/
-    ".js-categories-seasonal.list", /*ANIME LIST VIEW*/
-    ".js-block-list.list", /*ANIME LIST VIEW (in manga/anime genres))*/
-    ".tile-anime-list", /*ANIME TILE VIEW (in stacks and producer pages)*/
-    ".content-left:has(.information [data-l-content-type=anime], .information [data-l-content-type=manga])" /*SEARCH RESULTS PAGE (/search/all)*/
-];
+
 
 //Taking every value that we defined in the array earlier and setting in a <style> element, which will set all of these elements to visibility:hidden
 //then we attach this <style> into the document's root
 
 //think of it like:
 /**
- :is({list of selectors in elementsToHide}){
+ :is({list of selectors in HIDDEN_SELECTORS}){
     visibility: hidden;
  }
  */
 const style = document.createElement("style");
-style.textContent = `:is(${elementsToHide.join(", ")}) {
+style.id = "preload-hide"; //setting the id so it can be removed by the preload-hiding reversal
+//ATTENTION HIDDEN_SELECTORS is from the "system-config.js" file
+style.textContent = `:is(${HIDDEN_SELECTORS.join(", ")}) {
    visibility: hidden;
 }`;
 
@@ -47,14 +39,17 @@ let coverSpan = document.createElement("div");
 coverSpan.classList.add("mal-hider-cover-container");
 coverSpan.innerHTML =
 `<span class="mal-hider-cover">
-    <b> Content hidden by MAL SCORE HIDER. If you still can't see it <a class="revert-hide" role="button"> CLICK HERE </a> <b>
+    <b> Content hidden by MAL SCORE HIDER. If you still can't see it <a class="revert-hide" role="button"> CLICK HERE </a> </b>
 </span>`;
 
 
 let hiddenElements;
-document.addEventListener("DOMContentLoaded", ()=>{
+document.addEventListener("DOMContentLoaded", () => {
+    //In case scorehider.class.js hides the elements first.
+    if(!document.getElementById("preload-hide"))
+        return undefined;
     //waiting for the DOM to load and then getting every element that we hid
-    hiddenElements = document.querySelectorAll(`:is(${elementsToHide.join(", ")}`);
+    hiddenElements = document.querySelectorAll(`:is(${HIDDEN_SELECTORS.join(", ")})`);
 
     //iterating through each hidden element and attaching the "mal-hider-cover-container" and its children.
     for(let element of hiddenElements){
@@ -81,11 +76,10 @@ document.addEventListener("DOMContentLoaded", ()=>{
 /**
  * Makes every hidden element visible again, and removes all the .mal-hider-cover-container elements from the DOM.
  */
-const revertHide = ()=>{
-    for (let element of hiddenElements){
-        element.style.visibility = "visible"; //making the element visible again
-        element.querySelector(":scope .mal-hider-cover-container").remove(); //removing the covers from DOM
-    }
+const revertHide = () => {
+    style.remove(); //removing the <style> element, thus reverting all visibility changes we made
+    for (let element of hiddenElements)
+        element.querySelector(":scope .mal-hider-cover-container")?.remove(); //removing the covers from DOM
 };
 
 

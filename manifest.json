@@ -19,22 +19,19 @@
   "content_scripts": [
         {
             "matches": ["https://myanimelist.net/*"],
-            "js": ["js/preload-hide.js"],
+            "js": ["js/system-config.js", "js/preload-hide.js"],
             "css": ["css/preload-hide.css"],
             "run_at": "document_start"
         },
         {
             "matches": ["https://myanimelist.net/*"],
-            //ATTENTION!: storageSync.class.js has to be in the first position
             "js": ["js/storageSync.class.js", "js/scorehider.class.js"],
             "run_at": "document_end"
         }
     ],
   "browser_specific_settings": {
     "gecko": {
-        //apperantely this is required in firefox
-        //TODO: look into it later
-        "id": "malhider@extension"
+        "id": "{9ec0d0a2-bd78-4b5b-85f1-121fe2becce3}"
     }
   } 
 }

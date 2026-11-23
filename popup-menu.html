@@ -6,14 +6,15 @@
 	<title>Popup MAL score hider</title>
 	<script src="js/storageSync.class.js"></script>
 	<link rel="stylesheet" type="text/css" href="css/popup-menu.css">
+
+	<script src="js/system-config.js"></script> <!-- So we can use system-config.js variables in popup-menu.js -->
 	<script src="js/popup-menu.js"></script>
 </head>
 <body>
 	<header>
 		<span class="title"> MAL SCORE HIDER </span>
-		<button id="theme-button">
+		<button id="theme-button" aria-label="Toggle dark theme">
 				<svg  viewBox="0 0 24 24" version="1.1" style="color: rgb(0, 0, 0);" fill="#FFF"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <!-- Uploaded to: SVG Repo, www.svgrepo.com, Generator: SVG Repo Mixer Tools --> <title></title> <desc>Created with Sketch.</desc> <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd"> <g id="ic_fluent_dark_theme_24_regular" fill="#FFF" fill-rule="nonzero"> <path d="M12,22 C17.5228475,22 22,17.5228475 22,12 C22,6.4771525 17.5228475,2 12,2 C6.4771525,2 2,6.4771525 2,12 C2,17.5228475 6.4771525,22 12,22 Z M12,20.5 L12,3.5 C16.6944204,3.5 20.5,7.30557963 20.5,12 C20.5,16.6944204 16.6944204,20.5 12,20.5 Z"> </path> </g> </g> </g></svg>
-			</span>
 		</button>
 	</header>
 
@@ -45,7 +46,7 @@
 	-->
 	<div class="errorPopup" id="error-popup">
 		<!-- Close popup button -->
-		<button id="close-popup" type="button">
+		<button id="close-popup" type="button" aria-label="close error message">
 			<svg viewBox="-3 -2.5 30 30" fill="none" transform="matrix(1, 0, 0, 1, 0, 0)rotate(0)" stroke="#000000"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.4499999999999997"></g><g id="SVGRepo_iconCarrier"><!-- Uploaded to: SVG Repo, www.svgrepo.com, Generator: SVG Repo Mixer Tools --> <path d="M3 21.32L21 3.32001"  stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"></path> <path d="M3 3.32001L21 21.32" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"></path> </g></svg>
 		</button>
 
@@ -59,13 +60,13 @@
 				<h4>Score placeholder</h4>
 				<p>Type your own character to replace the hidden scores.</p>
 			</div>
-			<input id="score-placeholder" type="text"></input>
+			<input id="score-placeholder" type="text" aria-label="Score placeholder">
 		</div>
 
 		<!-- "Hide All" and "Show All" -->
 		<div class="container-apply-all">
-			<button id="show-all"> Show all </button>
-			<button id="hide-all"> Hide all </button>
+			<button id="show-all" aria-label="show all stats"> Show all </button>
+			<button id="hide-all" aria-label="hide all stats"> Hide all </button>
 		</div>
 
 		<div class="heading">
@@ -77,7 +78,7 @@
 			<span class="stat-title"> Score </span>
 			<div class="switch-container">
 				<label class="switch">
-					<input type="checkbox" id="score" name="score">
+					<input type="checkbox" id="score" name="score" aria-label="Hide score">
 					<span class="slider"></span>
 				</label>
 			</div>
@@ -88,7 +89,7 @@
 			<span class="stat-title"> Users </span>
 			<div class="switch-container">
 				<label class="switch">
-					<input type="checkbox" id="users" name="users">
+					<input type="checkbox" id="users" name="users" aria-label="Hide users">
 					<span class="slider"></span>
 				</label>
 			</div>
@@ -98,7 +99,7 @@
 			<span class="stat-title"> Rank </span>
 			<div class="switch-container">
 				<label class="switch">
-					<input type="checkbox" id="rank" name="rank">
+					<input type="checkbox" id="rank" name="rank" aria-label="Hide rank">
 					<span class="slider"></span>
 				</label>
 			</div>
@@ -108,7 +109,7 @@
 			<span class="stat-title"> Popularity </span>
 			<div class="switch-container">
 				<label class="switch">
-					<input type="checkbox" id="popularity" name="popularity">
+					<input type="checkbox" id="popularity" name="popularity" aria-label="Hide popularity">
 					<span class="slider"></span>
 				</label>
 			</div>
@@ -118,7 +119,7 @@
 			<span class="stat-title"> Members </span>
 			<div class="switch-container">
 				<label class="switch">
-					<input type="checkbox" id="members" name="members">
+					<input type="checkbox" id="members" name="members" aria-label="Hide members">
 					<span class="slider"></span>
 				</label>
 			</div>
@@ -128,7 +129,7 @@
 			<span class="stat-title"> Favorites </span>
 			<div class="switch-container">
 				<label class="switch">
-					<input type="checkbox" id="favorites" name="favorites">
+					<input type="checkbox" id="favorites" name="favorites" aria-label="Hide favorites">
 					<span class="slider"></span>
 				</label>
 			</div>
@@ -143,7 +144,7 @@
 			<span class="stat-title"> Recommended</span>
 			<div class="switch-container">
 				<label class="switch">
-					<input type="checkbox" id="recommended" name="recommended">
+					<input type="checkbox" id="recommended" name="recommended" aria-label="Hide recommended reviews">
 					<span class="slider"></span>
 				</label>
 			</div>
@@ -153,7 +154,7 @@
 			<span class="stat-title"> Mixed </span>
 			<div class="switch-container">
 				<label class="switch">
-					<input type="checkbox" id="mixed" name="mixed">
+					<input type="checkbox" id="mixed" name="mixed" aria-label="Hide mixed reviews">
 					<span class="slider"></span>
 				</label>
 			</div>
@@ -163,7 +164,7 @@
 			<span class="stat-title"> Not Recommended</span>
 			<div class="switch-container">
 				<label class="switch">
-					<input type="checkbox" id="not_recommended" name="not_recommended">
+					<input type="checkbox" id="not_recommended" name="not_recommended" aria-label="Hide not recommended reviews">
 					<span class="slider"></span>
 				</label>
 			</div>
@@ -173,7 +174,7 @@
 			<span class="stat-title"> Total Reviews </span>
 			<div class="switch-container">
 				<label class="switch">
-					<input type="checkbox" id="review_amount" name="review_amount">
+					<input type="checkbox" id="review_amount" name="review_amount" aria-label="Hide review amount">
 					<span class="slider"></span>
 				</label>
 			</div>
@@ -183,7 +184,7 @@
 			<span class="stat-title"> Review Bar </span>
 			<div class="switch-container">
 				<label class="switch">
-					<input type="checkbox" id="ratio_bar" name="ratio_bar">
+					<input type="checkbox" id="ratio_bar" name="ratio_bar" aria-label="Hide review ratio bar">
 					<span class="slider"></span>
 				</label>
 			</div>
