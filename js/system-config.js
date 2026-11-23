@@ -3,6 +3,19 @@
  * Therefore, it's of vital importance for it to be the first script to be run, so the other files can access the values present here
 */
 
+const DEBUG_MODE = false; //indicates if the various logs in the system will actually be logged or not
+
+/**
+ * Takes one or more arguments and calls for console.log
+ * ATTENTION: It only calls console.log ONCE, with EACH element of ...content
+ * @param {...*} content - the elements that we want to log.
+ */
+const DEBUG_LOG = (...content) => {
+    //only logs if the DEBUG_MODE constant is true.
+    if(DEBUG_MODE)
+        console.log(...content);
+};
+
 // Constant containing the classes of the elements that CONTAINS scores for us to hide.
 const HIDDEN_SELECTORS = [
             ".stats-block", /*Where the stats in ANIME/MANGA page stays*/

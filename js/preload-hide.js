@@ -9,9 +9,6 @@
  */
 
 //(1) HIDING THE ELEMENTS ===========================================================================================================================
-// array with the selectors of every element that we want to hide
-
-
 //Taking every value that we defined in the array earlier and setting in a <style> element, which will set all of these elements to visibility:hidden
 //then we attach this <style> into the document's root
 

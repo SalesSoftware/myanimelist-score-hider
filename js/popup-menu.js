@@ -21,8 +21,7 @@ class PopupMenu{
     async start(){
         //GETTING SETTINGS FROM STORAGE
         this.settings = (await this.storageSync.getFromStorage("scorehider_settings"));
-        console.log("initial settings");
-        console.log(this.settings);
+        DEBUG_LOG("initial settings", this.settings);
 
         if(this.settings?.error){
             //getFromStorage has returned an error. show it to the user
@@ -32,12 +31,12 @@ class PopupMenu{
 
         }else if(this.settings == undefined || this.settings == null){
             //settings weren't stored yet. So we call for setSettingsFirstUse() from StorageSync
-            console.log("Couldn't find settings data.\nStoring settings for the first time.");
+            DEBUG_LOG("Couldn't find settings data.\nStoring settings for the first time.");
             let result = await this.storageSync.setSettingsFirstUse();
             if(result.success){
                  //if the settings were stored, then just assign it to this.settings
                 this.settings = result.dataStored.scorehider_settings;
-                console.log("initial settings stored successfully", this.settings);
+                DEBUG_LOG("initial settings stored successfully", this.settings);
             }else{
                 //setSettingsFirstUse() returned an error. Show it to the user.
                 this.showErrorTabMessage(`Couldn't store the INITIAL settings. \n${result?.error}`);
@@ -91,14 +90,14 @@ class PopupMenu{
                         //ATTENTION "SETTINGS_OPTIONS" is defined in "system-config.js"
                         scorehider_settings = SETTINGS_OPTIONS;
                         checked = true;
-                        console.log("hiding all", scorehider_settings);
+                        DEBUG_LOG("hiding all", scorehider_settings);
                         break;
                     case "show-all":
 
                         //if the button clicked was "show all", we REMOVE EVERY STAT from "scorehider_settings" in storage
                         scorehider_settings = [];
                         checked = false;
-                        console.log("showing all", scorehider_settings);
+                        DEBUG_LOG("showing all", scorehider_settings);
                         break;
                 }
 
@@ -199,7 +198,7 @@ class PopupMenu{
                     //changes were successfully stored
                     //returning to the original checked status so the "toggle" animation can be played
                     e.target.checked = !e.target.checked;
-                    console.log(`${e.target.name} was ${e.target.checked ? "CHECKED" : "UNCHECKED"}`);
+                    DEBUG_LOG(`${e.target.name} was ${e.target.checked ? "CHECKED" : "UNCHECKED"}`);
                 }else{
                     //there was an error in the updateSettings execution, so we revert the checkbox selection
                     //Since we already reverted the checked status earlier, the checkbox will remain with whatever value it had before calling
@@ -232,8 +231,7 @@ class PopupMenu{
         if(result.success){
             //if it worked, then we update this.settings
             this.settings = newSettings;
-            console.log("new settings:");
-            console.log(this.settings);
+            DEBUG_LOG("new settings:", this.settings);
         }
         return result;
     }
@@ -320,7 +318,7 @@ class PopupMenu{
     async definePopupTheme(){
         //getting the theme from storage
         let theme = await this.storageSync.getFromStorage("theme");
-        console.log("theme", theme);
+        DEBUG_LOG("theme", theme);
         if(!theme?.error){
             //if the theme is "dark" we set the dark theme. Otherwise, we don't do nothing, as :root's default theme is "light"
             if(theme == "dark")

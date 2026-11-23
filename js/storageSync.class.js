@@ -36,7 +36,7 @@ class StorageSync{
             //await Promise.reject(new Error("Simulated error2")).then(
             await browser.storage.sync.set(value).then(
                 ()=>{
-                    console.log("updated storage succesfully", value);
+                    DEBUG_LOG("updated storage succesfully", value);
                     success = true;
                 }
             ).catch(

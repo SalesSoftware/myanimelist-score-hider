@@ -158,8 +158,7 @@ class ScoreHider{
 				//returns the element that is not undefined OR, if in the "/people/" page, returns the "people" view
 				return view.element || (view.type == "people" && location.pathname.startsWith("/people/"))
 			});
-			console.log("this.animeView");
-			console.log(this.animeView);
+			DEBUG_LOG("this.animeView", this.animeView);
 			if(this.animeView){
 				//a seasonal/list anime page has many "blocks" for each anime/manga entry.
 				//therefore we need to iterate through EVERY block and store their stats in a variable, before hiding the elements.
@@ -309,7 +308,7 @@ class ScoreHider{
 						this.animeViewElements.push(seasonalViewValues);
 					}catch(error){
 						console.error(error);
-						console.log(element);
+						DEBUG_LOG(element);
 					}
 				}
 			}
@@ -352,16 +351,9 @@ class ScoreHider{
 
 				}
 			}
-			console.log("searchResultsElements", this.searchResultsElements);
-
-			console.log("animeViewElements");
-			console.log(this.animeViewElements);
-
-			console.log("animeViewElements size");
-			console.log(this.animeViewElements.length);
-
-		    console.log("scoreDetails");
-			console.log(this.scoreDetails);
+			DEBUG_LOG("searchResultsElements", this.searchResultsElements);
+			DEBUG_LOG("animeViewElements", this.animeViewElements);
+		    DEBUG_LOG("scoreDetails", this.scoreDetails);
 
 		    this.start();
 		}catch(error){
@@ -384,7 +376,7 @@ class ScoreHider{
 	async start(){				
 		// await browser.storage.sync.clear(); //Wipes all storage, THIS IS MEANT FOR DEBUGGING *ONLY*.
 		// retrieves all storage data and then throws an error, THIS IS MEANT FOR DEBUGGING *ONLY*
-		// console.log("Testing storage"); console.log(await this.storageSync.getAllStorage()); throw new Error("Testing");
+		// DEBUG_LOG("Testing storage"); DEBUG_LOG(await this.storageSync.getAllStorage()); throw new Error("Testing");
 		try{
 			//GETTING THE SCORE_PLACEHOLDER FROM STORAGE
 			this.scorePlaceholder = await this.storageSync.getFromStorage("score_placeholder");
@@ -409,7 +401,7 @@ class ScoreHider{
 			//If there was no error, but we still didn't get the settings, then it means it's the first time the extension
 			//is being run.
 			if(this.settings == undefined || this.settings == null){
-				console.log("Couldn't find settings data.\nStoring settings for the first time.");
+				DEBUG_LOG("Couldn't find settings data.\nStoring settings for the first time.");
 				let result = await this.storageSync.setSettingsFirstUse(); //sets the settings for first time
 
 				if(result.success)
@@ -417,8 +409,8 @@ class ScoreHider{
 				else
 					throw result?.error;
 			}
-			console.log("settings");
-			console.log(this.settings);
+			DEBUG_LOG("settings");
+			DEBUG_LOG(this.settings);
 
 			//starts the hiding/showing proccess based on the settings
 
@@ -449,7 +441,7 @@ class ScoreHider{
 	 * it is of utmost importance of this function to work appropriately, otherwise it could break the pages that this extension is executed in
 	 */
 	revertPreLoadHide(){
-		console.log("reverting pre-load hide");
+		DEBUG_LOG("reverting pre-load hide");
 
 		//making the elements hidden the preload-hide.css visible again
 		document.getElementById("preload-hide")?.remove();
@@ -480,14 +472,14 @@ class ScoreHider{
 		//settings is only supposed to have 2 values max, so I don't see a problem in making a multilayered "for" statement
 		for(let currentList of fullList){
 			let statList = currentList.list;
-			console.log(`setAnimePageStatsVisibility(): STARTING ${currentList.action.toUpperCase()}`);
+			DEBUG_LOG(`setAnimePageStatsVisibility(): STARTING ${currentList.action.toUpperCase()}`);
 
 			//iterating through the entire list defined in the currentList, making sifferent actions depending on the currentList.action
 			for(let statName of statList){
 				try{
 					let stat = this.scoreDetails[statName];
 					if(stat.element){
-						console.log(`setAnimePageStatsVisibility(): ${currentList.action} "${statName}"`);
+						DEBUG_LOG(`setAnimePageStatsVisibility(): ${currentList.action} "${statName}"`);
 
 						//setting up the value that we're gonna set to the stat
 						let newValue;
@@ -508,7 +500,7 @@ class ScoreHider{
 							this.updateReviewScore(statName, newValue);
 
 					}else{
-						console.log(`setAnimePageStatsVisibility(): ${currentList.action} "${statName}" failed because "${statName}" is undefined. Ignoring.`);
+						DEBUG_LOG(`setAnimePageStatsVisibility(): ${currentList.action} "${statName}" failed because "${statName}" is undefined. Ignoring.`);
 					}
 				}catch(error){
 					console.error(`setAnimePageStatsVisibility(): ${currentList.action} "${statName}" threw an error`);
@@ -516,7 +508,7 @@ class ScoreHider{
 				}
 			}
 		}
-		console.log("setAnimePageStatsVisibility(): FINISHED");
+		DEBUG_LOG("setAnimePageStatsVisibility(): FINISHED");
 	}
 
 	/**
@@ -536,7 +528,7 @@ class ScoreHider{
 		let scoreVisibility = (statList, action) =>{
 				//making sure we won't include anything other than "score" and "members" in the statList
 				statList = statList.filter((stat)=>["score", "members"].includes(stat));
-				console.log(`setAnimeViewStatsVisibility(): STARTING TO ${action.toUpperCase()} THE ELEMENTS`);
+				DEBUG_LOG(`setAnimeViewStatsVisibility(): STARTING TO ${action.toUpperCase()} THE ELEMENTS`);
 				//ATTENTION: This is a pretty heavy iteration. For example: If there's 300 anime entries in the fall 2010 page, then this will run
 				//300 times. Each time we try to hide or show the elements, it'll run 300 times.
 				//I tried my best to make it concise, but I don't know if there could be possible performance issues.
@@ -576,7 +568,7 @@ class ScoreHider{
 					}
 
 				}
-				console.log(`setAnimeViewStatsVisibility(): FINISHED "${action.toUpperCase()}"`);
+				DEBUG_LOG(`setAnimeViewStatsVisibility(): FINISHED "${action.toUpperCase()}"`);
 		}
 
 		//this is a bit ugly, but honestly, who cares?
@@ -601,7 +593,7 @@ class ScoreHider{
 	setAnimePopupStatsVisiblity(hideList = [], showList = []){
 		//defining the "function" that we're going to run in order to hide/show the stats
 		let scoreVisibility = (statList, action) =>{
-			console.log(`setAnimePopupStatsVisiblity(): STARTING TO ${action.toUpperCase()} THE ELEMENTS`);
+			DEBUG_LOG(`setAnimePopupStatsVisiblity(): STARTING TO ${action.toUpperCase()} THE ELEMENTS`);
 			//making sure we'll ignore stats that aren't in the popup.
 			statList = statList.filter((stat)=>["score", "users", "rank", "popularity", "members"].includes(stat));
 
@@ -629,7 +621,7 @@ class ScoreHider{
 
 				}
 			}
-			console.log(`setAnimePopupStatsVisiblity(): FINISHED "${action.toUpperCase()}"`);
+			DEBUG_LOG(`setAnimePopupStatsVisiblity(): FINISHED "${action.toUpperCase()}"`);
 		}
 
 		//this is a bit ugly, but honestly, who cares?
@@ -654,7 +646,7 @@ class ScoreHider{
 		let scoreVisibility = (statList, action) =>{
 			//making sure we won't include anything other than "score" and "members" in the statList
 			statList = statList.filter((stat)=>["score", "members"].includes(stat));
-			console.log(`setSearchResultStatsVisibility(): STARTING TO ${action.toUpperCase()} THE ELEMENTS`);
+			DEBUG_LOG(`setSearchResultStatsVisibility(): STARTING TO ${action.toUpperCase()} THE ELEMENTS`);
 			if(statList.length > 0){
 				for(let searchResult of this.searchResultsElements){
 					try{
@@ -674,7 +666,7 @@ class ScoreHider{
 
 				}
 			}
-			console.log(`setSearchResultStatsVisibility(): FINISHED "${action.toUpperCase()}"`);
+			DEBUG_LOG(`setSearchResultStatsVisibility(): FINISHED "${action.toUpperCase()}"`);
 		}
 
 		//this is a bit ugly, but honestly, who cares?
@@ -884,8 +876,7 @@ class ScoreHider{
 					//we alter the text node to hide the score.
 					if(change.target?.classList.contains("extra-info") && change.addedNodes[0]?.textContent.toLowerCase().includes("score")){
 						change.addedNodes[0].textContent = `Score: ${this.scorePlaceholder}`; //replacing text to hide the score
-						console.log("OBSERVER: score element found.");
-						console.log(change);
+						DEBUG_LOG("OBSERVER: score element found.", change);
 					}
 				}
 			}
@@ -986,7 +977,7 @@ class ScoreHider{
 				}
 				//storing the animeRatings value in the this.scorePopupElements
 				this.scorePopupElements.push(animeRatings);
-				console.log("this.scorePopupElements", this.scorePopupElements);
+				DEBUG_LOG("this.scorePopupElements", this.scorePopupElements);
 			}
 		});
 		//STARTING THE POPUP OBSERVER
@@ -1018,10 +1009,8 @@ class ScoreHider{
 			let newValue = changes.scorehider_settings.newValue;
 			this.settings = newValue;
 
-			console.log("change old value");
-			console.log(oldValue);
-			console.log("change new value");
-			console.log(newValue);
+			DEBUG_LOG("change old value", oldValue);
+			DEBUG_LOG("change new value", newValue);
 
 			//The code below makes sure we'll only act upon the elements that were added/removed
 			//otherwise this.setAnimePageStatsVisibility would trigger a "show" command for every single element that wasn't hidden, or
@@ -1038,11 +1027,7 @@ class ScoreHider{
 
 
 			//just logging this as an object so it's more convenient to compare hideList with showList
-			console.log("hidelist + showlist");
-			console.log({
-				"hidelist": hideList,
-				"showlist": showList
-			});
+			DEBUG_LOG("hidelist + showlist", {"hidelist": hideList,"showlist": showList});
 		}else if(changes.score_placeholder){
 			//the score placeholder was changed in storage
 			//so update the this.scorePlaceholder attribute and refresh the statsVisiblity of the page to use the new score placeholder
