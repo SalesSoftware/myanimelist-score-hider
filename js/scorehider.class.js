@@ -1,9 +1,3 @@
-/*
- * 
- * TODO Create an Icon for the project
- * 
-*/
-
 /**
  *
  * This class has the duty of hiding all the scores that the user wants it to hide, across (most) pages that has score stats defined
