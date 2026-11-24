@@ -1,7 +1,8 @@
 # This README is still a work in progress
 # MyAnimeList Score Hider
 
-![](https://github.com/SalesSoftware/myanimelist-score-hider/blob/main/img/intro.gif)
+![intro](https://github.com/user-attachments/assets/7bf10b7e-7f0b-42d7-b356-7303b2aaf5ff)
+
 
 #### A browser extension that hides the anime/manga scores, rank, members, and other ratings across multiple MyAnimeList pages. 
 
