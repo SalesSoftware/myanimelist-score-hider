@@ -75,8 +75,7 @@ This is because these installation guides also make it possible to properly debu
 
 Any errors the extension gets will be shown in the console as a `console.error`;
 
-Also make sure to, in the`js/system-config.js` file, set the `DEBUG_MODE` constant to `true`. This will make various logs show up in the console as
-you use the extension.
+Also make sure to, in the`js/system-config.js` file, set the `DEBUG_MODE` constant to `true`. This will make various logs show up in the console as you use the extension.
 
 ### Debugging in Chrome
 1. Make your changes.
