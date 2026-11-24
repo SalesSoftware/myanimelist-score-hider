@@ -23,7 +23,7 @@ Currently it's possible to hide the following ratings:
 * Members
 * Favorites (specifically anime/manga marked as favorites. Characters, studios, mangaka, and other non-anime/manga favorites remain unchanged)
 
-**RATINGS SPECIFIC FOR THE ANIME/MANGA PAGES:**
+**RATINGS SPECIFICIFICALLY FOR THE ANIME/MANGA PAGES:**
 
 * "Recommend" reviews amount
 * "Not Recommend" reviews amount
