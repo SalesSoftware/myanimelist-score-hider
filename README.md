@@ -1,4 +1,6 @@
-
+[![Badge License]][License]
+[![Badge Mozilla]][Mozilla]
+![Badge Chrome]
 <p align="center">
   <img src="https://github.com/SalesSoftware/myanimelist-score-hider/blob/main/img/potential.png" height="250" width="250">
 </p>  
