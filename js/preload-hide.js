@@ -36,7 +36,7 @@ let coverSpan = document.createElement("div");
 coverSpan.classList.add("mal-hider-cover-container");
 coverSpan.innerHTML =
 `<span class="mal-hider-cover">
-    <b> Content hidden by MAL SCORE HIDER. If you still can't see it <a class="revert-hide" role="button"> CLICK HERE </a> </b>
+    <b> MAL SCORE HIDER is temporarily hiding this content. If you're stuck <a class="revert-hide" role="button"> CLICK HERE TO REVEAL IT </a> </b>
 </span>`;
 
 

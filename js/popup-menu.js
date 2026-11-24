@@ -246,7 +246,10 @@ class PopupMenu{
         //if we coudln't recover the score_placeholder from storage - Either by it not existing in storage, or due to some error in storage.sync -
         //we automatically set the scorePlaceholder as "?"
         if(currentScorePlaceholder?.error || !currentScorePlaceholder){
-            console.error(`couldn't recover the score placeholder from storage, using "?" by default.\nError: `, currentScorePlaceholder?.error);
+            //if it was an error, console.error it
+            if(currentScorePlaceholder?.error)
+                console.error(`couldn't recover the score placeholder from storage, using "?" by default.\nError: `,currentScorePlaceholder?.error);
+
             currentScorePlaceholder = "?";
         }
 

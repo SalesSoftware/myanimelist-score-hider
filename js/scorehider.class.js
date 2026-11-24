@@ -54,16 +54,9 @@ class ScoreHider{
 							"statsBlock": this.divStatsBlock?.querySelector(".fl-l.score"),
 							"leftSide": this.getSidebarElement("users")
 						},
-						/*In some pages, between the "(scored by" and "x users)" there is an invisible <span> element with a number inside it
-						this hidden <span> causes the "textContent" property to get the wrong number
-						, because it gets ALL of the text of the element and its children, and ends up joining both numbers.
-
-						therefore, this solution first checks if the element has HTML with the innerHTML property,
-						if it has html, then we can safely use innerText, as it gets all the text RESPECTING visibility definitions.
-						*/
-						"value": this.getSidebarElement("users")?.innerHTML
-									? this.getSidebarElement("users")?.innerText.replace(/[^0-9,-]/g, "") // this extracts only the numbers, "-" and ","
-									: this.getSidebarElement("users")?.textContent.replace(/[^0-9,-]/g, "") // this extracts only the numbers, "-" and ","
+						// the .score element has an attribute "data-users" that has the amount of users
+						// the "replace" extracts only the numbers, "-" and ","
+						"value": this.divStatsBlock?.querySelector(".fl-l.score")?.getAttribute("data-user").replace(/[^0-9,-]/g, "")
 					},
 					"rank":{
 						"element": {
@@ -375,8 +368,8 @@ class ScoreHider{
 	 */
 	async start(){				
 		// await browser.storage.sync.clear(); //Wipes all storage, THIS IS MEANT FOR DEBUGGING *ONLY*.
-		// retrieves all storage data and then throws an error, THIS IS MEANT FOR DEBUGGING *ONLY*
-		// DEBUG_LOG("Testing storage"); DEBUG_LOG(await this.storageSync.getAllStorage()); throw new Error("Testing");
+		//retrieves all storage data and then throws an error, THIS IS MEANT FOR DEBUGGING *ONLY*
+		// console.log("Testing storage"); console.log(await this.storageSync.getAllStorage()); throw new Error("Testing");
 		try{
 			//GETTING THE SCORE_PLACEHOLDER FROM STORAGE
 			this.scorePlaceholder = await this.storageSync.getFromStorage("score_placeholder");
@@ -791,7 +784,7 @@ class ScoreHider{
 		if(elementName == "users"){
 			//The "users" and "score" tabs are in the same parent element
 			//so if we are trying to get the users, we can just call the element directly			
-			element = this.leftSidebar.querySelector("[data-id=info1]");			
+			element = this.leftSidebar.querySelector("[data-id=info1]");
 		}else{
 			element = leftElements.find((e)=>{
 				/*
