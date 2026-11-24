@@ -1,10 +1,9 @@
-# This README is still a work in progress
 # MyAnimeList Score Hider
-
-![](img/demo_3.gif)
-
-
 #### A browser extension that hides the anime/manga scores, rank, members, and other ratings across multiple MyAnimeList pages. 
+![](img/demo_4.gif)
+
+
+
 
 MyAnimeList scorehider is a browser extension that aims to hide the scores of anime and manga across multiple pages in MyAnimelist, replacing each 
 value with "?" OR another placeholder that is defined by the user on the popup's control panel. 
