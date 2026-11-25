@@ -1,4 +1,9 @@
-# MyAnimeList Score Hider
+<p align="center">
+  <img src="https://github.com/SalesSoftware/myanimelist-score-hider/blob/main/img/potential.png" height="250" width="250">
+</p>  
+<h1 align="center">MyAnimeList Score Hider</h1>
+
+
 #### A browser extension that hides the anime/manga scores, rank, members, and other ratings across multiple MyAnimeList pages. 
 ![](img/demo_4.gif)
 
@@ -18,7 +23,7 @@ Currently it's possible to hide the following ratings:
 * Members
 * Favorites (specifically anime/manga marked as favorites. Characters, studios, mangaka, and other non-anime/manga favorites remain unchanged)
 
-RATINGS SPECIFIC FOR THE ANIME/MANGA PAGES:
+**RATINGS SPECIFICIFICALLY FOR THE ANIME/MANGA PAGES:**
 
 * "Recommend" reviews amount
 * "Not Recommend" reviews amount
