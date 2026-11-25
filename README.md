@@ -33,7 +33,13 @@ Currently it's possible to hide the following ratings:
 
 
 ## Video demonstrating the extension
-![](video/video_demo.mp4)
+https://github.com/user-attachments/assets/78e189f6-eff4-4f1b-8686-d724fd00a86d
+
+
+
+
+
+
 
 
 ## Pages mapped by the extension
