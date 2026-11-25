@@ -28,7 +28,7 @@ RATINGS SPECIFIC FOR THE ANIME/MANGA PAGES:
 
 
 ## Video demonstrating the extension
-COMING SOON
+![](video/video_demo.mp4)
 
 
 ## Pages mapped by the extension
