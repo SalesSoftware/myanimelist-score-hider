@@ -10,7 +10,7 @@
 
 
 
-MyAnimeList scorehider is a browser extension that aims to hide the scores of anime and manga across multiple pages in MyAnimelist, replacing each 
+MyAnimeList scorehider is a browser extension that aims to hide the scores of anime and manga across multiple pages in MyAnimeList, replacing each 
 value with "?" OR another placeholder that is defined by the user on the popup's control panel. 
 
 The ratings can be toggled as the user sees fit via the popup's control panel. 
@@ -23,7 +23,7 @@ Currently it's possible to hide the following ratings:
 * Members
 * Favorites (specifically anime/manga marked as favorites. Characters, studios, mangaka, and other non-anime/manga favorites remain unchanged)
 
-**RATINGS SPECIFICIFICALLY FOR THE ANIME/MANGA PAGES:**
+**Ratings specific to anime/manga pages::**
 
 * "Recommend" reviews amount
 * "Not Recommend" reviews amount
@@ -50,9 +50,9 @@ Here's a list of every MyAnimeList page that this extension affects. (The links 
 3. Anime/Manga lists (Seasonal anime, Genre, Manga magazines, etc.)([https://myanimelist.net/anime/season/2010/summer](https://myanimelist.net/anime/season/2010/summer))
 4. Anime stacks (P.S Only for view_style=tile or view_style=seasonal.[https://myanimelist.net/stacks/93985](https://myanimelist.net/stacks/93985))
 5. Company/Producer/Studio anime lists ([https://myanimelist.net/anime/producer/18/Toei_Animation](https://myanimelist.net/anime/producer/18/Toei_Animation))
-6. People page (As long as there's anime/manga entries)([https://myanimelist.net/people/1881/Eiichiro_Oda](https://myanimelist.net/people/1881/Eiichiro_Oda))
-7. Search bar suggestions (Typying in the search bar opens a dropdown of suggestions, each one showing a score. This extension can hide these scores).
-8. Hovering Popups (Some pages has hovering popups that shows all rating of an anime/manga. This extension can hide these ratings too)
+6. People page (As long as there are anime/manga entries)([https://myanimelist.net/people/1881/Eiichiro_Oda](https://myanimelist.net/people/1881/Eiichiro_Oda))
+7. Search bar suggestions (Typing in the search bar opens a dropdown of suggestions, each one showing a score. This extension can hide these scores).
+8. Hovering Popups (Some pages have hover popups that show all ratings of an anime/manga. This extension can hide these ratings too)
 
 
 ## Installing
@@ -65,7 +65,7 @@ Nevertheless, it's possible to install the project on each browser by following 
 
 1. Download/Clone this repository.
 2. Go to `about:debugging`.
-3. Select "This Firefox.
+3. Select "This Firefox".
 4. Open "Temporary Extensions" (If it isn't already open) and click in "Load Temporary Add-on...".
 5. Go to the folder you downloaded/cloned this repository at and select the "manifest.json" file.
 6. You have successfully installed the extension in Firefox.
@@ -90,14 +90,14 @@ Also make sure to, in the`js/system-config.js` file, set the `DEBUG_MODE` consta
 
 ### Debugging in Chrome
 1. Make your changes.
-2. Go to the `chrome://extensions/` page and look for the "Myanimelist score Hider" that you installed,**Making sure that you're in developer mode**.
-3. Click on the reload button on the bottom-right side of the Myanimelist Score Hider tab.
+2. Go to the `chrome://extensions/` page and look for the "MyAnimeList Score Hider" that you installed,**Making sure that you're in developer mode**.
+3. Click on the reload button on the bottom-right side of the MyAnimeList Score Hider tab.
 4. **REFRESH ALL MYANIMELIST PAGES**.
 5. Your changes should now be reflected on the extension.
 
 ### Debugging in Firefox
 1. Make your changes.
-2. Go to `about:debugging` > "This Firefox", and look for the "Myanimelist Score Hider" tab in the "Temporary Extensions toggle". 
+2. Go to `about:debugging` > "This Firefox", and look for the "MyAnimeList Score Hider" tab in the "Temporary Extensions toggle". 
 3. Click on "Reload" on the bottom-right side of the extension's tab.
 4. **REFRESH ALL MYANIMELIST PAGES.**
 5. Your changes should now be reflected on the extension.
@@ -110,7 +110,7 @@ Simply right click the extension's icon in the extension's tool bar and select "
 **DISCLAIMER:** As soon as you close the popup, the inspector will also close.
 
 #### Firefox
-Go to `about:debugging` > "This Firefox", and look for the "Myanimelist Score Hider" tab in the "Temporary Extensions toggle". 
+Go to `about:debugging` > "This Firefox", and look for the "MyAnimeList Score Hider" tab in the "Temporary Extensions toggle". 
 Then click "Inspect" in the top-right side of the tab. 
 Firefox's popup inspector remains open, even if the popup is closed. 
 _Long live the fox_.
@@ -121,7 +121,7 @@ _Long live the fox_.
 The entire extension is highly dependent on MyAnimeList's page layout. A significant page redesign on their end may break this extension.
 
 **Issue 2**
-The pre-load hide is not applied to the "people" page. This means that in pages like [Oda's page](https://myanimelist.net/people/1881/Eiichiro_Oda?q=oda&cat=person) will "flash" the scores for a few milliseconds before hiding them.
+The pre-load hide is not applied to the "people" page. This means that on pages like [Oda's page](https://myanimelist.net/people/1881/Eiichiro_Oda?q=oda&cat=person) the scores will "flash" for a few milliseconds before being hidden.
 
 **Issue 3**
 The `debounce` function in `storageSync.class.js` is currently using a "global" variable `this.debounceTimeout` for timeout storage. 
