@@ -133,9 +133,4 @@ in less than 100ms (That is the limit I set in `setInStorage()`), but an issue i
 
 
 
-## If this project helps you, please star the repository!
-I'll be honest, I'm looking for a job and it's been pretty tough. 
-Starring this project would be a great help to make my profile more interesting for recruiters. 
-So, If you like my work, please consider starring this repository.
-Thank you! ☺️
-
+## 🌟 If this project helps you, please star the repository! 🌟
